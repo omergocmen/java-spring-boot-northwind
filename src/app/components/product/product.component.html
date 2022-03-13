@@ -1,0 +1,32 @@
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Ürün Ara</label>
+  <input type="text" [(ngModel)]="filterText"  class="form-control" id="filterText" placeholder="Arama İfadesi Giriniz">
+</div>
+<div *ngIf="filterText" class="alert alert-info">
+  {{filterText}} kelimesini aradınız.
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>İd</th>
+      <th>Ürün Adı</th>
+      <th>Kategori İd</th>
+      <th>Birim Fiyatı</th>
+      <th>Kdv'li Fiyatı</th>
+      <th>Stok Adedi</th>
+      <th>#</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products |filterPipe:filterText">
+      <td>{{ product.id }}</td>
+      <td>{{ product.productName }}</td>
+      <td>{{ product.categoryId }}</td>
+      <td>{{ product.unitPrice |currency}}</td>
+      <td>{{ product.unitPrice |vatAdded:10 |currency}}</td>
+      <td>{{ product.unitsInStock }}</td>
+      <td><button (click)="addToCart(product)" type="button" class="btn btn-success">Sepete Ekle</button></td>
+    </tr>
+  </tbody>
+</table>
